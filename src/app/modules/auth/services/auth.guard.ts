@@ -12,13 +12,34 @@ export class AuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authService.currentUserValue;
-    if (currentUser) {
-      // logged in so return true
-      return true;
+
+    /**---------------------------------------------
+     * | Validamos si actualmente no hay un usuario
+     * ---------------------------------------------*/
+
+    if (!currentUser) {
+      this.authService.logout();
+      return false;
     }
 
-    // not logged in so redirect to login page with the return url
-    this.authService.logout();
-    return false;
+    let token = this.authService.token;
+
+    if (!token) {
+      this.authService.logout();
+      return false;
+    }
+
+    /**---------------------------------------------
+     * | Validamos que el token no haya expirado
+     * ---------------------------------------------*/
+
+    let expiration = JSON.parse(atob(token.split('.')[1])).exp;
+
+    if (Math.floor(new Date().getTime() / 1000) >= expiration) {
+      this.authService.logout();
+      return false;
+    }
+
+    return true;
   }
 }

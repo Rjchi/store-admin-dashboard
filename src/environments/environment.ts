@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   appVersion: 'v8.0.38',
   USERDATA_KEY: 'authf649fc9a5f55',
-  isMockEnabled: true, // esto nos permite loguearnos de manera falsa
+  isMockEnabled: false, // esto nos permite loguearnos de manera falsa
   apiUrl: 'api',
   appThemeName: 'Metronic',
   appPurchaseUrl: 'https://1.envato.market/EA4JP',
@@ -157,7 +157,7 @@ export const environment = {
     },
   },
   URL_BACKEND: 'http://127.0.0.1:3000/',
-  URL_SERVICIOS: 'http://127.0.0.1:3000/api',
+  URL_SERVICIOS: 'http://127.0.0.1:3000/api/',
   URL_FROTEND: 'http://localhost:5000',
 };
 
