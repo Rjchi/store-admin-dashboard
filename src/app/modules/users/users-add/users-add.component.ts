@@ -7,6 +7,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UsersAddComponent implements OnInit {
 
+  rol: string = "admin";
+
+  name: string = "";
+  email: string = "";
+  surname: string = "";
+  password: string = "";
+  profession: string = "";
+  description: string = "";
+
   constructor() { }
 
   ngOnInit(): void {
