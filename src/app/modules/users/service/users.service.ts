@@ -14,7 +14,7 @@ export class UsersService {
 
   constructor(private http: HttpClient, public authservice: AuthService) {
     this.isLoadingSubject = new BehaviorSubject<boolean>(false); // Con isLoadingSubjet le decimos a metronic que se esta iniciando una petición http
-    this.isLoading$ = this.isLoadingSubject.asObservable();
+    this.isLoading$ = this.isLoadingSubject.asObservable(); // Dependemos de esta variable para que la vista se renderice
   }
 
   listUser(search: any = null) {
