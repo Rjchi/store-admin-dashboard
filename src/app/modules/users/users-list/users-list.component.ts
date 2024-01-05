@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
+import { UsersService } from '../service/users.service';
 import { UsersAddComponent } from '../users-add/users-add.component';
 
 @Component({
@@ -10,12 +11,25 @@ import { UsersAddComponent } from '../users-add/users-add.component';
 })
 export class UsersListComponent implements OnInit {
 
+  USERS: any = [];
+  isLoading: any;
+
   /**----------------------------------------------------------------------
    * | Llamamos a la clase NgbModal para generar las ventanas emergentes
    * ----------------------------------------------------------------------*/
-  constructor(public modalService: NgbModal) {}
+  constructor(public modalService: NgbModal, public userService: UsersService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+
+    /**-------------------------------------------------------------------
+     * | Aqui inicializamos isLoading para que se renderice la vista
+     * -------------------------------------------------------------------*/
+    this.isLoading = this.userService.isLoading$;
+
+    this.userService.listUser().subscribe((res: any) => {
+      this.USERS = res.users;
+    });
+  }
 
   registerUser() {
 
