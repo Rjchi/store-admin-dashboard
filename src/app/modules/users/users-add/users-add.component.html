@@ -8,7 +8,7 @@
     <!--begin::Close-->
     <div
       class="btn btn-icon btn-sm btn-active-icon-primary"
-      data-kt-users-modal-action="close"
+      (click)="modal.close()"
     >
       <!--begin::Svg Icon | path: icons/duotune/arrows/arr061.svg-->
       <span class="svg-icon svg-icon-1">
@@ -74,7 +74,9 @@
             <!--begin::Preview existing avatar style="background-image: url(assets/media/avatars/300-6.jpg)" -->
             <div
               class="image-input-wrapper w-125px h-125px"
-              [ngStyle]="{'background-image': 'url('+IMAGEN_PREVIZUALIZAR+')'}"
+              [ngStyle]="{
+                'background-image': 'url(' + IMAGEN_PREVIZUALIZAR + ')'
+              }"
             ></div>
             <!--end::Preview existing avatar-->
             <!--begin::Label-->
@@ -87,7 +89,12 @@
               <i class="bi bi-pencil-fill fs-7"></i>
               <!--begin::Inputs-->
               <!-- INDICAMOS QUE TIPOS DE ARCHIVOS ACEPTAMOS en este caso: png, jpg, jpeg -->
-              <input type="file" name="avatar" accept=".png, .jpg, .jpeg" (change)="processAvatar($event)" />
+              <input
+                type="file"
+                name="avatar"
+                accept=".png, .jpg, .jpeg"
+                (change)="processAvatar($event)"
+              />
               <input type="hidden" name="avatar_remove" />
               <!--end::Inputs-->
             </label>
@@ -144,7 +151,7 @@
           <input
             type="text"
             name="surname"
-            [ngModel]="surname"
+            [(ngModel)]="surname"
             class="form-control form-control-solid mb-3 mb-lg-0"
             placeholder="Full surname"
           />
@@ -299,17 +306,18 @@
           Discard
         </button>
         <button
-          type="submit"
+          type="button"
+          (click)="save()"
           class="btn btn-primary"
           data-kt-users-modal-action="submit"
         >
           <span class="indicator-label">Submit</span>
-          <span class="indicator-progress"
+          <!-- <span class="indicator-progress"
             >Please wait...
             <span
               class="spinner-border spinner-border-sm align-middle ms-2"
             ></span
-          ></span>
+          ></span> -->
         </button>
       </div>
       <!--end::Actions-->
