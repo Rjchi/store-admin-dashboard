@@ -38,5 +38,9 @@ export class UsersListComponent implements OnInit {
      * | Pasandole como parametro un componente
      * -------------------------------------------*/
     const modalRef = this.modalService.open(UsersAddComponent, {centered: true, size: 'md'});
+
+    modalRef.componentInstance.UserC.subscribe((User: any) => {
+      this.USERS.unshift(User);
+    })
   }
 }
