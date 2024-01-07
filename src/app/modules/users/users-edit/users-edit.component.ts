@@ -143,6 +143,12 @@ export class UsersEditComponent implements OnInit {
        * ----------------------------------------------------------*/
       this.UserE.emit(res.user);
       this.modal.close();
+
+      this.toaster.open({
+        text: 'SE EDITO EL USURIO',
+        caption: 'VALIDACIÓN',
+        type: 'primary',
+      });
     });
   }
 }
