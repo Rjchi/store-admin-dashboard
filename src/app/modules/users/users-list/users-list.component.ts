@@ -3,6 +3,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 
 import { UsersService } from '../service/users.service';
 import { UsersAddComponent } from '../users-add/users-add.component';
+import { UsersEditComponent } from '../users-edit/users-edit.component';
 
 @Component({
   selector: 'app-users-list',
@@ -41,6 +42,27 @@ export class UsersListComponent implements OnInit {
 
     modalRef.componentInstance.UserC.subscribe((User: any) => {
       this.USERS.unshift(User);
+    })
+  }
+
+  editUser(USER: any) {
+    const modalRef = this.modalService.open(UsersEditComponent, {centered: true, size: 'md'});
+
+    /**------------------------------------------------------------
+     * | En este caso utilizamos una variable de tipo input
+     * | Ya que le vamos a pasar contenido a un componente hijo
+     * ------------------------------------------------------------*/
+    modalRef.componentInstance.USER = USER;
+
+    modalRef.componentInstance.UserE.subscribe((User: any) => {
+      let INDEX = this.USERS.findIndex((item: any) => item._id === USER._id);
+
+      /**--------------------------------------------
+       * | En este caso si encontro al usurio
+       * --------------------------------------------*/
+      if (INDEX != -1) {
+        this.USERS[INDEX] = User; // Reemplazamos con la nueva información
+      }
     })
   }
 }
