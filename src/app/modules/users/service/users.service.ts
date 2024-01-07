@@ -58,7 +58,7 @@ export class UsersService {
     let URL = URL_SERVICIOS + '/auth/update';
 
     return this.http
-      .post(URL, data, { headers })
+      .put(URL, data, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
