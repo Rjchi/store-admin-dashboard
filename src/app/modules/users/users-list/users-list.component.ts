@@ -4,6 +4,7 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { UsersService } from '../service/users.service';
 import { UsersAddComponent } from '../users-add/users-add.component';
 import { UsersEditComponent } from '../users-edit/users-edit.component';
+import { UsersDeleteComponent } from '../users-delete/users-delete.component';
 
 @Component({
   selector: 'app-users-list',
@@ -62,6 +63,20 @@ export class UsersListComponent implements OnInit {
        * --------------------------------------------*/
       if (INDEX != -1) {
         this.USERS[INDEX] = User; // Reemplazamos con la nueva información
+      }
+    })
+  }
+
+  deleteUser(USER: any) {
+    const modalRef = this.modalService.open(UsersDeleteComponent, {centered: true, size: 'md'});
+
+    modalRef.componentInstance.USER = USER;
+
+    modalRef.componentInstance.UserD.subscribe((val: any) => {
+      let INDEX = this.USERS.findIndex((item: any) => item._id === USER._id);
+
+      if (INDEX != -1) {
+        this.USERS.splice(INDEX, 1); // Eliminamos el usuario de la lista
       }
     })
   }
