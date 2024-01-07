@@ -12,42 +12,56 @@ import { UsersDeleteComponent } from '../users-delete/users-delete.component';
   styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent implements OnInit {
-
   USERS: any = [];
+  search: string = '';
   isLoading: any;
 
   /**----------------------------------------------------------------------
    * | Llamamos a la clase NgbModal para generar las ventanas emergentes
    * ----------------------------------------------------------------------*/
-  constructor(public modalService: NgbModal, public userService: UsersService) {}
+  constructor(
+    public modalService: NgbModal,
+    public userService: UsersService
+  ) {}
 
   ngOnInit(): void {
-
     /**-------------------------------------------------------------------
      * | Aqui inicializamos isLoading para que se renderice la vista
      * -------------------------------------------------------------------*/
     this.isLoading = this.userService.isLoading$;
 
-    this.userService.listUser().subscribe((res: any) => {
+    this.listUser();
+  }
+
+  /**-----------------------------------
+   * | Función para filtrar un usuario
+   * -----------------------------------*/
+  listUser() {
+    this.userService.listUser(this.search).subscribe((res: any) => {
       this.USERS = res.users;
     });
   }
 
   registerUser() {
-
     /**-------------------------------------------
      * | Aperturamos la ventana emergente
      * | Pasandole como parametro un componente
      * -------------------------------------------*/
-    const modalRef = this.modalService.open(UsersAddComponent, {centered: true, size: 'md'});
+    const modalRef = this.modalService.open(UsersAddComponent, {
+      centered: true,
+      size: 'md',
+    });
 
     modalRef.componentInstance.UserC.subscribe((User: any) => {
       this.USERS.unshift(User);
-    })
+    });
   }
 
   editUser(USER: any) {
-    const modalRef = this.modalService.open(UsersEditComponent, {centered: true, size: 'md'});
+    const modalRef = this.modalService.open(UsersEditComponent, {
+      centered: true,
+      size: 'md',
+    });
 
     /**------------------------------------------------------------
      * | En este caso utilizamos una variable de tipo input
@@ -64,11 +78,14 @@ export class UsersListComponent implements OnInit {
       if (INDEX != -1) {
         this.USERS[INDEX] = User; // Reemplazamos con la nueva información
       }
-    })
+    });
   }
 
   deleteUser(USER: any) {
-    const modalRef = this.modalService.open(UsersDeleteComponent, {centered: true, size: 'md'});
+    const modalRef = this.modalService.open(UsersDeleteComponent, {
+      centered: true,
+      size: 'md',
+    });
 
     modalRef.componentInstance.USER = USER;
 
@@ -78,6 +95,6 @@ export class UsersListComponent implements OnInit {
       if (INDEX != -1) {
         this.USERS.splice(INDEX, 1); // Eliminamos el usuario de la lista
       }
-    })
+    });
   }
 }
