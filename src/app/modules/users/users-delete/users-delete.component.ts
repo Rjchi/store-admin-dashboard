@@ -25,6 +25,12 @@ export class UsersDeleteComponent implements OnInit {
     this.userService.remove(this.USER._id).subscribe((res: any) => {
       this.UserD.emit('');
       this.modal.close();
+
+      this.toaster.open({
+        text: 'SE ELIMINO EL USUARIO CORRECTAMENTE',
+        caption: 'VALIDACIÓN',
+        type: 'primary',
+      });
     });
   }
 }
