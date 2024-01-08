@@ -17,7 +17,7 @@ export class UsersService {
     this.isLoading$ = this.isLoadingSubject.asObservable(); // Dependemos de esta variable para que la vista se renderice
   }
 
-  listUser(search: any = null) {
+  listUser(search: any = null, rol: any = null) {
     this.isLoadingSubject.next(true); // Cuando inicia la petición http
 
     /**-------------------------------------------------
@@ -31,6 +31,10 @@ export class UsersService {
        * | En caso de haber parametros de busqueda los concatenamos
        * --------------------------------------------------------------*/
       LINK += '&search=' + search;
+    }
+
+    if (rol) {
+      LINK += '&rol=' + rol;
     }
 
     let URL = URL_SERVICIOS + '/auth/list' + LINK; // lINK por defecto es null

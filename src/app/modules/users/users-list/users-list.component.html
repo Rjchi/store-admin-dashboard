@@ -103,13 +103,12 @@
                   data-allow-clear="true"
                   data-kt-user-table-filter="role"
                   data-hide-search="true"
+                  [(ngModel)]="rol"
+                  (change)="listUser()"
                 >
-                  <option></option>
-                  <option value="Administrator">Administrator</option>
-                  <option value="Analyst">Analyst</option>
-                  <option value="Developer">Developer</option>
-                  <option value="Support">Support</option>
-                  <option value="Trial">Trial</option>
+                  <option value="">Todos</option>
+                  <option value="admin">Administrador</option>
+                  <option value="instructor">Instructor</option>
                 </select>
               </div>
               <!--end::Input group-->

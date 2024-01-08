@@ -12,6 +12,8 @@ import { UsersDeleteComponent } from '../users-delete/users-delete.component';
   styleUrls: ['./users-list.component.scss'],
 })
 export class UsersListComponent implements OnInit {
+
+  rol: string = '';
   USERS: any = [];
   search: string = '';
   isLoading: any;
@@ -37,7 +39,7 @@ export class UsersListComponent implements OnInit {
    * | Función para filtrar un usuario
    * -----------------------------------*/
   listUser() {
-    this.userService.listUser(this.search).subscribe((res: any) => {
+    this.userService.listUser(this.search, this.rol).subscribe((res: any) => {
       this.USERS = res.users;
     });
   }
