@@ -115,6 +115,12 @@ export class UsersAddComponent implements OnInit {
        * ----------------------------------------------------------*/
       this.UserC.emit(res.user);
       this.modal.close();
+
+      this.toaster.open({
+        text: 'SE REGISTRO UN NUEVO USUARIO',
+        caption: 'VALIDACIÓN',
+        type: 'primary',
+      });
     });
   }
 }
