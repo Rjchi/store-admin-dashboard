@@ -1,5 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { InlineSVGModule } from 'ng-inline-svg-2';
+import { HttpClientModule } from '@angular/common/http';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { NgbModule, NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { CategorieRoutingModule } from './categorie-routing.module';
 import { CategorieComponent } from './categorie.component';
@@ -19,7 +23,14 @@ import { CategorieDeleteComponent } from './categorie-delete/categorie-delete.co
   ],
   imports: [
     CommonModule,
-    CategorieRoutingModule
+    CategorieRoutingModule,
+
+    HttpClientModule,
+    FormsModule,
+    NgbModule,
+    ReactiveFormsModule,
+    InlineSVGModule,
+    NgbModalModule,
   ]
 })
 export class CategorieModule { }
