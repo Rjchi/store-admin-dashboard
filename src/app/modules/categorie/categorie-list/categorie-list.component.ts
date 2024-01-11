@@ -55,13 +55,13 @@ export class CategorieListComponent implements OnInit {
 
     modalRef.componentInstance.CATEGORIE = CATEGORIE;
 
-    // modalRef.componentInstance.UserE.subscribe((User: any) => {
-    //   let INDEX = this.CATEGORIES.findIndex((item: any) => item._id === CATEGORIE._id);
+    modalRef.componentInstance.CategorieE.subscribe((Categorie: any) => {
+      let INDEX = this.CATEGORIES.findIndex((item: any) => item._id === CATEGORIE._id);
 
-    //   if (INDEX != -1) {
-    //     this.CATEGORIES[INDEX] = User;
-    //   }
-    // });
+      if (INDEX != -1) {
+        this.CATEGORIES[INDEX] = Categorie;
+      }
+    });
   }
 
   deleteCategorie(CATEGORIE: any) {
