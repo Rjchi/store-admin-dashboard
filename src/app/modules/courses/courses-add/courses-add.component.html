@@ -249,7 +249,7 @@
               title="Enter the contact's name."
             ></i>
           </label>
-          <ckeditor data="<p>Hello, world!</p>"></ckeditor>
+          <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
         </div>
       </div>
       <div class="row mb-7">

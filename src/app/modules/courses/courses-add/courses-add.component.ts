@@ -16,6 +16,8 @@ export class CoursesAddComponent implements OnInit {
   FILE_IMAGEN: any;
   IMAGEN_PREVIZUALIZAR: any = '';
 
+  description: any = '';
+
   constructor(public coursesService: CoursesService, public toaster: Toaster) {}
 
   ngOnInit(): void {
@@ -48,5 +50,16 @@ export class CoursesAddComponent implements OnInit {
     setTimeout(() => {
       this.coursesService.isLoadingSubject.next(false);
     }, 100);
+  }
+
+  /**------------------------------------------------------------------------------------
+   * | Esta es la parte del ckeditor, aqui gestionamos todos los cambios que se hagan
+   * | Dentro del ckeditor
+   * ------------------------------------------------------------------------------------*/
+  onChange($event: any) {
+    /**--------------------------------------
+     * | Asignamos el valor que se digite
+     * --------------------------------------*/
+    this.description = $event.editor.getData();
   }
 }
