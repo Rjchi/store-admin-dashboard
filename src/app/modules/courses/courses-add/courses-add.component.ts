@@ -16,7 +16,13 @@ export class CoursesAddComponent implements OnInit {
   FILE_IMAGEN: any;
   IMAGEN_PREVIZUALIZAR: any = '';
 
-  description: any = '';
+  description: string = '';
+
+  requirement: string = '';
+  requirements: any = [];
+
+  who_is: string = '';
+  who_is_it_for: any = [];
 
   constructor(public coursesService: CoursesService, public toaster: Toaster) {}
 
@@ -62,4 +68,57 @@ export class CoursesAddComponent implements OnInit {
      * --------------------------------------*/
     this.description = $event.editor.getData();
   }
+
+  addRequirement() {
+    if (!this.requirement) {
+      this.toaster.open({
+        text: 'EL TEXTO ES REQUERIDO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+
+    this.requirements.push(this.requirement);
+
+    setTimeout(() => {
+      this.requirement = '';
+
+      /**----------------------------------------------------------
+       * | Agregamos esto para que el input se vacie
+       * | Despues de agregar una opción (en otras palabras
+       * | sincronizamos la vista)
+       * ----------------------------------------------------------*/
+      this.coursesService.isLoadingSubject.next(true);
+      setTimeout(() => {
+        this.coursesService.isLoadingSubject.next(false);
+      }, 100);
+    }, 25);
+  }
+
+  addWhoIs() {
+    if (!this.who_is) {
+      this.toaster.open({
+        text: 'EL TEXTO ES REQUERIDO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+
+    this.who_is_it_for.push(this.who_is);
+
+    setTimeout(() => {
+      this.who_is = '';
+
+      this.coursesService.isLoadingSubject.next(true);
+      setTimeout(() => {
+        this.coursesService.isLoadingSubject.next(false);
+      }, 100);
+    }, 25);
+  }
+
+  deleteRequirement(index: any) {}
+
+  deleteWhoIs(index: any) {}
 }

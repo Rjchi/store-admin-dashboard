@@ -1,4 +1,7 @@
-<span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
+<span
+  class="spinner-border spinner-border-sm align-middle ms-2"
+  *ngIf="isLoading$ | async"
+></span>
 <!--begin::Contacts-->
 <div class="card card-flush h-lg-100" id="kt_contacts_main">
   <!--begin::Card header-->
@@ -236,7 +239,12 @@
           </div>
         </div>
         <div class="col-6">
-          <img [src]="IMAGEN_PREVIZUALIZAR" width="100%" alt="imagen del curso" *ngIf="IMAGEN_PREVIZUALIZAR" />
+          <img
+            [src]="IMAGEN_PREVIZUALIZAR"
+            width="100%"
+            alt="imagen del curso"
+            *ngIf="IMAGEN_PREVIZUALIZAR"
+          />
         </div>
       </div>
       <div class="row mb-7">
@@ -266,9 +274,14 @@
             type="text"
             class="form-control form-control-solid"
             name="requirement"
-            value=""
+            [(ngModel)]="requirement"
           />
-          <button class="btn btn-primary w-16 h-16 mx-2">+</button>
+          <button
+            class="btn btn-primary w-16 h-16 mx-2"
+            (click)="addRequirement()"
+          >
+            +
+          </button>
         </div>
         <div class="col-6">
           <table
@@ -279,12 +292,21 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <tr>
-                <td>LARAVEL Y ANGULAR BASICO</td>
-                <td>
-                  <button class="btn btn-sm btn-danger mx-2">X</button>
-                </td>
-              </tr>
+              <ng-container
+                *ngFor="let requirement of requirements; let i = index"
+              >
+                <tr>
+                  <td>{{ requirement }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-danger mx-2"
+                      (click)="deleteRequirement(i)"
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
@@ -302,10 +324,12 @@
           <input
             type="text"
             class="form-control form-control-solid"
-            name="who_is_it_for"
-            value=""
+            name="who_is"
+            [(ngModel)]="who_is"
           />
-          <button class="btn btn-primary w-16 h-16 mx-2">+</button>
+          <button class="btn btn-primary w-16 h-16 mx-2" (click)="addWhoIs()">
+            +
+          </button>
         </div>
         <div class="col-6">
           <table
@@ -316,12 +340,19 @@
               <th>Action</th>
             </thead>
             <tbody>
-              <tr>
-                <td>Desarrollador Web</td>
-                <td>
-                  <button class="btn btn-sm btn-danger mx-2">X</button>
-                </td>
-              </tr>
+              <ng-container *ngFor="let who_is of who_is_it_for; let i = index">
+                <tr>
+                  <td>{{ who_is }}</td>
+                  <td>
+                    <button
+                      class="btn btn-sm btn-danger mx-2"
+                      (click)="deleteWhoIs(i)"
+                    >
+                      X
+                    </button>
+                  </td>
+                </tr>
+              </ng-container>
             </tbody>
           </table>
         </div>
