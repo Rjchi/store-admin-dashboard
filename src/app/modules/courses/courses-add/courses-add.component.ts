@@ -118,7 +118,15 @@ export class CoursesAddComponent implements OnInit {
     }, 25);
   }
 
-  deleteRequirement(index: any) {}
+  deleteRequirement(index: any) {
+    /**---------------------------------------------------
+     * | Con esto eliminamos una opción en especifico
+     * | del array de opciones
+     * ---------------------------------------------------*/
+    this.requirements.splice(index, 1);
+  }
 
-  deleteWhoIs(index: any) {}
+  deleteWhoIs(index: any) {
+    this.who_is_it_for.splice(index, 1);
+  }
 }
