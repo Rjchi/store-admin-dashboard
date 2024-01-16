@@ -1,3 +1,4 @@
+import { Toaster } from 'ngx-toast-notifications';
 import { Component, OnInit } from '@angular/core';
 
 import { CoursesService } from '../service/courses.service';
@@ -12,7 +13,10 @@ export class CoursesAddComponent implements OnInit {
   CATEGORIES: any = [];
   isLoading$: any; // Siempre es neccesario para que se renderice correctamente la vista
 
-  constructor(public coursesService: CoursesService) {}
+  FILE_IMAGEN: any;
+  IMAGEN_PREVIZUALIZAR: any = '';
+
+  constructor(public coursesService: CoursesService, public toaster: Toaster) {}
 
   ngOnInit(): void {
     this.isLoading$ = this.coursesService.isLoading$;
@@ -24,17 +28,25 @@ export class CoursesAddComponent implements OnInit {
   }
 
   processFile($event: any) {
-    // if ($event.target.files[0].type.indexOf('image') < 0) {
-    //   this.toaster.open({
-    //     text: 'SOLAMENTE SE ACEPTA IMAGENES',
-    //     caption: 'VALIDACIONES',
-    //     type: 'danger',
-    //   });
-    //   return;
-    // }
-    // this.FILE_IMAGEN = $event.target.files[0];
-    // let reader = new FileReader();
-    // reader.readAsDataURL(this.FILE_IMAGEN);
-    // reader.onloadend = () => (this.IMAGEN_PREVIZUALIZAR = reader.result);
+    if ($event.target.files[0].type.indexOf('image') < 0) {
+      this.toaster.open({
+        text: 'SOLAMENTE SE ACEPTA IMAGENES',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+    this.FILE_IMAGEN = $event.target.files[0];
+    let reader = new FileReader();
+    reader.readAsDataURL(this.FILE_IMAGEN);
+    reader.onloadend = () => (this.IMAGEN_PREVIZUALIZAR = reader.result);
+
+    /**----------------------------------------------------------------------
+     * | Damos tiempo de 100ms para que la imagen se pueda previsualizar
+     * ----------------------------------------------------------------------*/
+    this.coursesService.isLoadingSubject.next(true);
+    setTimeout(() => {
+      this.coursesService.isLoadingSubject.next(false);
+    }, 100);
   }
 }
