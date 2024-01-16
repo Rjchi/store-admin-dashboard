@@ -27,4 +27,58 @@ export class CoursesService {
       .get(URL, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
+
+  listCourses(search: any = null, state: any = null) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let LINK = '?T=';
+
+    if (search) {
+      LINK += '&search=' + search;
+    }
+
+    if (state) {
+      LINK += '&state=' + state;
+    }
+
+    let URL = URL_SERVICIOS + '/courses/list' + LINK;
+
+    return this.http
+      .get(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  registerCourses(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/courses/register';
+
+    return this.http
+      .post(URL, data, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  updateCourses(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/courses/update';
+
+    return this.http
+      .put(URL, data, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  removeCourses(categorie_id: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/courses/remove/' + categorie_id;
+
+    return this.http
+      .delete(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
 }
