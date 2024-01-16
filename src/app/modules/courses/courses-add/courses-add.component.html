@@ -1,3 +1,4 @@
+<span class="spinner-border spinner-border-sm align-middle ms-2" *ngIf="isLoading$ | async"></span>
 <!--begin::Contacts-->
 <div class="card card-flush h-lg-100" id="kt_contacts_main">
   <!--begin::Card header-->
@@ -137,7 +138,10 @@
             name="categorie"
             placeholder="Selec. Categoria"
           >
-            <option value="">Todos</option>
+            <option value="">Select.</option>
+            <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+              <option [value]="CATEGORIE._id">{{ CATEGORIE.title }}</option>
+            </ng-container>
           </select>
         </div>
       </div>
@@ -159,7 +163,7 @@
             name="categorie"
             placeholder="Selec. Nivel"
           >
-            <option value="">Todos</option>
+            <option value="">Select.</option>
             <option value="Basico">Basico</option>
             <option value="Intermedio">Intermedio</option>
             <option value="Avanzado">Avanzado</option>
@@ -181,7 +185,7 @@
             name="idioma"
             placeholder="Selec. Idioma"
           >
-            <option value="">Todos</option>
+            <option value="">Select.</option>
             <option value="Ingles">Ingles</option>
             <option value="Español">Español</option>
             <option value="Portugues">Portugues</option>
@@ -204,7 +208,12 @@
             name="instructor"
             placeholder="Selec. Instructor"
           >
-            <option value="">Todos</option>
+            <option value="">Select.</option>
+            <ng-container *ngFor="let USER of USERS">
+              <option [value]="USER._id">
+                {{ USER.name + " " + USER.surname }}
+              </option>
+            </ng-container>
           </select>
         </div>
       </div>
