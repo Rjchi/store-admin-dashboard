@@ -24,6 +24,15 @@ export class CoursesAddComponent implements OnInit {
   who_is: string = '';
   who_is_it_for: any = [];
 
+  user: string = '';
+  title: string = '';
+  level: string = '';
+  idioma: string = '';
+  subtitle: string = '';
+  categorie: string = '';
+  price_usd: number = 0;
+  price_soles: number = 0;
+
   constructor(public coursesService: CoursesService, public toaster: Toaster) {}
 
   ngOnInit(): void {
@@ -128,5 +137,76 @@ export class CoursesAddComponent implements OnInit {
 
   deleteWhoIs(index: any) {
     this.who_is_it_for.splice(index, 1);
+  }
+
+  save() {
+    if (
+      !this.description ||
+      this.requirements.length === 0 ||
+      this.who_is_it_for.length === 0 ||
+      !this.user ||
+      !this.title ||
+      !this.level ||
+      !this.idioma ||
+      !this.subtitle ||
+      !this.categorie ||
+      !this.price_usd ||
+      !this.price_soles ||
+      !this.FILE_IMAGEN
+    ) {
+      this.toaster.open({
+        text: 'NECESITAS INGRESAR TODOS LOS CAMPOS DEL FORMULARIO DEL CURSO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+
+    let formData = new FormData();
+
+    formData.append('user', this.user);
+    formData.append('level', this.level);
+    formData.append('title', this.title);
+    formData.append('idioma', this.idioma);
+    formData.append('subtitle', this.subtitle);
+    formData.append('portada', this.FILE_IMAGEN);
+    formData.append('categorie', this.categorie);
+    formData.append('description', this.description);
+    formData.append('price_usd', this.price_usd + '');
+    formData.append('price_soles', this.price_soles + '');
+    formData.append('requirements', JSON.stringify(this.requirements));
+    formData.append('who_is_it_for', JSON.stringify(this.who_is_it_for));
+
+    this.coursesService.registerCourses(formData).subscribe((res: any) => {
+      if (res.message === 403) {
+        this.toaster.open({
+          text: res.message_text,
+          caption: 'VALIDACIONES',
+          type: 'danger',
+        });
+
+        return;
+      }
+
+      this.user = '';
+      this.level = '';
+      this.title = '';
+      this.idioma = '';
+      this.subtitle = '';
+      this.categorie = '';
+      this.description = '';
+      this.price_usd = 0;
+      this.price_soles = 0;
+      this.requirements = [];
+      this.who_is_it_for = [];
+      this.FILE_IMAGEN = null;
+      this.IMAGEN_PREVIZUALIZAR = null;
+
+      this.toaster.open({
+        text: res.msg,
+        caption: 'VALIDACIONES',
+        type: 'primary',
+      });
+    });
   }
 }
