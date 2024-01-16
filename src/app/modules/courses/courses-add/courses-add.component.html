@@ -59,8 +59,8 @@
           <input
             type="text"
             class="form-control form-control-solid"
-            name="name"
-            value=""
+            name="title"
+            [(ngModel)]="title"
           />
           <!--end::Input-->
         </div>
@@ -79,6 +79,7 @@
           <textarea
             class="form-control form-control-solid"
             name="subtitle"
+            [(ngModel)]="subtitle"
           ></textarea>
           <!--end::Input-->
         </div>
@@ -101,7 +102,7 @@
             type="number"
             class="form-control form-control-solid"
             name="price_soles"
-            value=""
+            [(ngModel)]="price_soles"
           />
           <!--end::Input-->
         </div>
@@ -121,7 +122,7 @@
             type="number"
             class="form-control form-control-solid"
             name="price_usd"
-            value=""
+            [(ngModel)]="price_usd"
           />
           <!--end::Input-->
         </div>
@@ -139,6 +140,7 @@
           <select
             class="form-select form-select-solid ng-pristine ng-valid ng-touched"
             name="categorie"
+            [(ngModel)]="categorie"
             placeholder="Selec. Categoria"
           >
             <option value="">Select.</option>
@@ -163,7 +165,8 @@
           <!--end::Label-->
           <select
             class="form-select form-select-solid ng-pristine ng-valid ng-touched"
-            name="categorie"
+            name="level"
+            [(ngModel)]="level"
             placeholder="Selec. Nivel"
           >
             <option value="">Select.</option>
@@ -186,6 +189,7 @@
           <select
             class="form-select form-select-solid ng-pristine ng-valid ng-touched"
             name="idioma"
+            [(ngModel)]="idioma"
             placeholder="Selec. Idioma"
           >
             <option value="">Select.</option>
@@ -209,6 +213,7 @@
           <select
             class="form-select form-select-solid ng-pristine ng-valid ng-touched"
             name="instructor"
+            [(ngModel)]="user"
             placeholder="Selec. Instructor"
           >
             <option value="">Select.</option>
@@ -366,7 +371,7 @@
       <!--begin::Action buttons-->
       <div class="d-flex justify-content-end">
         <!--begin::Button-->
-        <button type="button" class="btn btn-primary">
+        <button type="button" class="btn btn-primary" (click)="save()">
           <span class="indicator-label">Save</span>
           <span class="indicator-progress"
             >Please wait...
