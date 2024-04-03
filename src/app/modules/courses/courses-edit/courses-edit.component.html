@@ -401,6 +401,9 @@
               <label class="custom-file-label" for="customFile"
                 >Choose file</label
               >
+              <div *ngIf="link_video_vimeo" class="py-5">
+                <iframe [src]="urlVideo()" frameborder="0"></iframe>
+              </div>
             </div>
           </div>
         </div>

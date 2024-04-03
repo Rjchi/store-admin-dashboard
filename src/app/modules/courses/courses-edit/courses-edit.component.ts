@@ -1,4 +1,5 @@
 import { Toaster } from 'ngx-toast-notifications';
+import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
@@ -39,11 +40,13 @@ export class CoursesEditComponent implements OnInit {
   course_id: any = null;
   loadVideo: boolean = true;
   COURSE_SELECTED: any = null;
+  link_video_vimeo: any = null;
 
   constructor(
     public toaster: Toaster,
     public coursesService: CoursesService,
-    public activatedRouter: ActivatedRoute // Con esto podemos obtener el ID de la ruta
+    public activatedRouter: ActivatedRoute, // Con esto podemos obtener el ID de la ruta
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit(): void {
@@ -74,6 +77,7 @@ export class CoursesEditComponent implements OnInit {
         this.categorie = this.COURSE_SELECTED.categorie._id;
         this.description = this.COURSE_SELECTED.description;
         this.requirements = this.COURSE_SELECTED.requirements;
+        this.link_video_vimeo = this.COURSE_SELECTED.vimeo_id;
         this.IMAGEN_PREVIZUALIZAR = this.COURSE_SELECTED.image;
         this.who_is_it_for = this.COURSE_SELECTED.who_is_it_for;
       });
@@ -240,9 +244,7 @@ export class CoursesEditComponent implements OnInit {
   }
 
   uploadVimeo() {
-    if (
-      !this.FILE_VIDEO
-    ) {
+    if (!this.FILE_VIDEO) {
       this.toaster.open({
         text: 'NO EXISTE EL VIDEO',
         caption: 'VALIDACIONES',
@@ -253,8 +255,8 @@ export class CoursesEditComponent implements OnInit {
 
     let formData = new FormData();
 
-    formData.append("_id", this.course_id);
-    formData.append("video", this.FILE_VIDEO);
+    formData.append('_id', this.course_id);
+    formData.append('video', this.FILE_VIDEO);
     this.loadVideo = false;
     this.coursesService.uploadVimeo(formData).subscribe((resp: any) => {
       console.log(resp);
@@ -264,6 +266,13 @@ export class CoursesEditComponent implements OnInit {
         caption: 'VALIDACIONES',
         type: 'primary',
       });
-    })
+    });
+  }
+
+  urlVideo() {
+    /**----------------------
+     * | Sanitizamos la URL
+     * ----------------------*/
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.link_video_vimeo);
   }
 }
