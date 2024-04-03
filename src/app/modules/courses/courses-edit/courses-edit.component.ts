@@ -14,6 +14,7 @@ export class CoursesEditComponent implements OnInit {
   CATEGORIES: any = [];
   isLoading$: any; // Siempre es neccesario para que se renderice correctamente la vista
 
+  FILE_VIDEO: any;
   FILE_IMAGEN: any;
   IMAGEN_PREVIZUALIZAR: any = '';
 
@@ -99,6 +100,10 @@ export class CoursesEditComponent implements OnInit {
     setTimeout(() => {
       this.coursesService.isLoadingSubject.next(false);
     }, 100);
+  }
+
+  processVideo($event: any) {
+    this.FILE_VIDEO = $event.target.files[0];
   }
 
   /**------------------------------------------------------------------------------------
@@ -231,5 +236,26 @@ export class CoursesEditComponent implements OnInit {
         type: 'primary',
       });
     });
+  }
+
+  uploadVimeo() {
+    if (
+      !this.FILE_VIDEO
+    ) {
+      this.toaster.open({
+        text: 'NO EXISTE EL VIDEO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+
+    let formData = new FormData();
+
+    formData.append("video", this.FILE_VIDEO);
+
+    this.coursesService.uploadVimeo(formData).subscribe((resp: any) => {
+      console.log(resp);
+    })
   }
 }

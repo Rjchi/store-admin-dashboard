@@ -71,6 +71,17 @@ export class CoursesService {
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
+  uploadVimeo(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/courses/upload-vimeo';
+
+    return this.http
+      .post(URL, data, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
   updateCourses(data: any) {
     this.isLoadingSubject.next(true);
 
