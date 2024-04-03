@@ -12,6 +12,9 @@ import { CoursesAddComponent } from './courses-add/courses-add.component';
 import { CoursesEditComponent } from './courses-edit/courses-edit.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesDeleteComponent } from './courses-delete/courses-delete.component';
+import { SectionAddComponent } from './sections/section-add/section-add.component';
+import { SectionEditComponent } from './sections/section-edit/section-edit.component';
+import { SectionDeleteComponent } from './sections/section-delete/section-delete.component';
 
 
 @NgModule({
@@ -20,7 +23,10 @@ import { CoursesDeleteComponent } from './courses-delete/courses-delete.componen
     CoursesAddComponent,
     CoursesEditComponent,
     CoursesListComponent,
-    CoursesDeleteComponent
+    CoursesDeleteComponent,
+    SectionAddComponent,
+    SectionEditComponent,
+    SectionDeleteComponent
   ],
   imports: [
     CommonModule,
