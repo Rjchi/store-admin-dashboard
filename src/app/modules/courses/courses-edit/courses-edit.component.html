@@ -389,7 +389,7 @@
       <div class="row mb-7">
         <div class="col-5">
           <div class="col-lg-6 col-md-6 col-sm-12 my-2">
-            <label class="form-label">Sube tu video: *</label>
+            <label class="form-label">Sube tu video trailer: *</label>
             <div class="custom-file">
               <input
                 type="file"
@@ -405,7 +405,13 @@
           </div>
         </div>
         <div class="col-6">
-          <button class="btn btn-primary btn-sm" (click)="uploadVimeo()">+</button>
+          <button class="btn btn-primary btn-sm" (click)="uploadVimeo()" *ngIf="loadVideo">
+            +
+          </button>
+          <span
+            class="spinner-border spinner-border-sm align-middle ms-2"
+            *ngIf="!loadVideo"
+          ></span>
         </div>
       </div>
 

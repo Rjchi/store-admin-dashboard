@@ -37,6 +37,7 @@ export class CoursesEditComponent implements OnInit {
   price_soles: number = 0;
 
   course_id: any = null;
+  loadVideo: boolean = true;
   COURSE_SELECTED: any = null;
 
   constructor(
@@ -252,10 +253,17 @@ export class CoursesEditComponent implements OnInit {
 
     let formData = new FormData();
 
+    formData.append("_id", this.course_id);
     formData.append("video", this.FILE_VIDEO);
-
+    this.loadVideo = false;
     this.coursesService.uploadVimeo(formData).subscribe((resp: any) => {
       console.log(resp);
+      this.loadVideo = true;
+      this.toaster.open({
+        text: 'VIDEO SUBIDO EXITOSAMENTE!',
+        caption: 'VALIDACIONES',
+        type: 'primary',
+      });
     })
   }
 }
