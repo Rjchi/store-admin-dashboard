@@ -28,6 +28,17 @@ export class CoursesService {
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
+  ShowCourse(course_id: string = '') {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    const URL = URL_SERVICIOS + '/courses/show/' + course_id;
+
+    return this.http
+      .get(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
   listCourses(search: any = null, state: any = null) {
     this.isLoadingSubject.next(true);
 
@@ -54,6 +65,17 @@ export class CoursesService {
 
     let headers = new HttpHeaders({ token: this.authservice.token });
     let URL = URL_SERVICIOS + '/courses/register';
+
+    return this.http
+      .post(URL, data, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  uploadVimeo(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/courses/upload-vimeo';
 
     return this.http
       .post(URL, data, { headers })
