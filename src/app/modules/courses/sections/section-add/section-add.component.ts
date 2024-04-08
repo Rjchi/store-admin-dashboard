@@ -14,6 +14,8 @@ export class SectionAddComponent implements OnInit {
   title: string;
   courseId: string = '';
 
+  SECTIONS: any[] = [];
+
   constructor(
     public toaster: Toaster,
     public activatedRouter: ActivatedRoute,
@@ -28,6 +30,10 @@ export class SectionAddComponent implements OnInit {
      * ----------------------------*/
     this.activatedRouter.params.subscribe((resp: any) => {
       this.courseId = resp.id;
+    });
+
+    this.courseSectionService.listSections().subscribe((resp: any) => {
+      this.SECTIONS = resp.courses_sections;
     });
   }
 
@@ -55,7 +61,12 @@ export class SectionAddComponent implements OnInit {
           type: 'danger',
         });
       } else {
-        this.title = "";
+        this.title = '';
+
+        /**--------------------------------------------------------------
+         * | Sincronizamos el listado con el formulario de registro
+         * --------------------------------------------------------------*/
+        this.SECTIONS.unshift(resp.section);
 
         this.toaster.open({
           text: 'LA SECCIÓN SE HA REGISTRADO CORRECTAMENTE',
