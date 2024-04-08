@@ -1,8 +1,10 @@
 import { Toaster } from 'ngx-toast-notifications';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 
 import { CourseSectionService } from '../../service/course-section.service';
+import { SectionEditComponent } from '../section-edit/section-edit.component';
 
 @Component({
   selector: 'app-section-add',
@@ -18,6 +20,7 @@ export class SectionAddComponent implements OnInit {
 
   constructor(
     public toaster: Toaster,
+    public modalService: NgbModal,
     public activatedRouter: ActivatedRoute,
     public courseSectionService: CourseSectionService
   ) {}
@@ -53,7 +56,6 @@ export class SectionAddComponent implements OnInit {
     };
 
     this.courseSectionService.registerSection(data).subscribe((resp: any) => {
-      console.log(resp);
       if (resp.msg === 403) {
         this.toaster.open({
           text: resp.message_text,
@@ -73,6 +75,34 @@ export class SectionAddComponent implements OnInit {
           caption: 'VALIDACIÓN',
           type: 'primary',
         });
+      }
+    });
+  }
+
+  editSection(SECTION: any) {
+    const modalRef = this.modalService.open(SectionEditComponent, {
+      size: 'md',
+      centered: true,
+    });
+
+    /**--------
+     * | Input
+     * --------*/
+    modalRef.componentInstance.SECTION = SECTION;
+
+    /**--------
+     * | Output
+     * --------*/
+    modalRef.componentInstance.SectionE.subscribe((EditSection: any) => {
+      /**------------------------------------
+       * | Editamos la sección de la lista
+       * ------------------------------------*/
+      let INDEX = this.SECTIONS.findIndex(
+        (item: any) => item._id === EditSection._id
+      );
+
+      if (INDEX !== -1) {
+        this.SECTIONS[INDEX] = EditSection;
       }
     });
   }
