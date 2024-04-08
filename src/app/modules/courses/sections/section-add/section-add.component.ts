@@ -5,6 +5,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { CourseSectionService } from '../../service/course-section.service';
 import { SectionEditComponent } from '../section-edit/section-edit.component';
+import { SectionDeleteComponent } from '../section-delete/section-delete.component';
 
 @Component({
   selector: 'app-section-add',
@@ -103,6 +104,25 @@ export class SectionAddComponent implements OnInit {
 
       if (INDEX !== -1) {
         this.SECTIONS[INDEX] = EditSection;
+      }
+    });
+  }
+
+  deleteSection(SECTION: any) {
+    const modalRef = this.modalService.open(SectionDeleteComponent, {
+      size: 'md',
+      centered: true,
+    });
+
+    modalRef.componentInstance.SECTION = SECTION;
+
+    modalRef.componentInstance.SectionD.subscribe((resp: any) => {
+      let INDEX = this.SECTIONS.findIndex(
+        (item: any) => item._id === SECTION._id
+      );
+
+      if (INDEX !== -1) {
+        this.SECTIONS.splice(INDEX);
       }
     });
   }
