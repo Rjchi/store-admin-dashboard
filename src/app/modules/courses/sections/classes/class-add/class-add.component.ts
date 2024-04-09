@@ -64,8 +64,9 @@ export class ClassAddComponent implements OnInit {
         });
       } else {
         this.title = '';
+        this.description = '';
 
-        this.CLASSES.unshift(resp.section);
+        this.CLASSES.unshift(resp.course_class);
 
         this.toaster.open({
           text: 'LA CLASE SE HA REGISTRADO CORRECTAMENTE',
