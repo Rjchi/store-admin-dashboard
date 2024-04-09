@@ -6,6 +6,7 @@ import { CoursesAddComponent } from './courses-add/courses-add.component';
 import { CoursesListComponent } from './courses-list/courses-list.component';
 import { CoursesEditComponent } from './courses-edit/courses-edit.component';
 
+import { ClassAddComponent } from './sections/classes/class-add/class-add.component';
 import { SectionAddComponent } from './sections/section-add/section-add.component';
 
 const routes: Routes = [
@@ -24,6 +25,10 @@ const routes: Routes = [
       {
         path: 'list/section/:id',
         component: SectionAddComponent,
+      },
+      {
+        path: 'list/section/classes/:id',
+        component: ClassAddComponent,
       },
       {
         path: 'list/edit/:id',
