@@ -95,6 +95,7 @@ export class ClassAditComponent implements OnInit {
     this.courseClassService.uploadVimeo(formData).subscribe((resp: any) => {
       console.log(resp);
       this.loadVideo = true;
+      this.link_video_vimeo = resp.vimeo_id;
       this.toaster.open({
         text: 'VIDEO SUBIDO EXITOSAMENTE!',
         caption: 'VALIDACIONES',
