@@ -117,7 +117,7 @@ export class ClassAddComponent implements OnInit {
       );
 
       if (INDEX !== -1) {
-        this.CLASSES.splice(INDEX);
+        this.CLASSES.splice(INDEX, 1);
       }
     });
   }

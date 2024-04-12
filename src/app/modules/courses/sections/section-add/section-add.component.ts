@@ -122,7 +122,7 @@ export class SectionAddComponent implements OnInit {
       );
 
       if (INDEX !== -1) {
-        this.SECTIONS.splice(INDEX);
+        this.SECTIONS.splice(INDEX, 1);
       }
     });
   }
