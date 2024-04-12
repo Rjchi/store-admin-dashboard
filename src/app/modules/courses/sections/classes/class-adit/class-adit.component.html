@@ -77,6 +77,39 @@
           </label>
           <ckeditor [data]="description" (change)="onChange($event)"></ckeditor>
         </div>
+        <div class="row mb-7">
+          <div class="col-lg-6 col-md-6 col-sm-12 my-2">
+            <label class="form-label">Sube tu video: *</label>
+            <div class="custom-file">
+              <input
+                type="file"
+                class="custom-file-input"
+                id="customFile"
+                accept=".mp4"
+                (change)="processVideo($event)"
+              />
+              <label class="custom-file-label" for="customFile"
+                >Choose file</label
+              >
+              <div *ngIf="link_video_vimeo" class="py-5">
+                <iframe [src]="urlVideo()" frameborder="0"></iframe>
+              </div>
+            </div>
+          </div>
+          <div>
+            <button
+              class="btn btn-primary btn-sm"
+              (click)="uploadVimeo()"
+              *ngIf="loadVideo"
+            >
+              +
+            </button>
+            <span
+              class="spinner-border spinner-border-sm align-middle ms-2"
+              *ngIf="!loadVideo"
+            ></span>
+          </div>
+        </div>
         <div class="col-6">
           <label class="fs-6 fw-bold form-label mt-3">
             <span class="required">State</span>
