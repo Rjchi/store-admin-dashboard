@@ -18,9 +18,14 @@ export class ClassAditComponent implements OnInit {
   state: number = 1;
   description: any = '';
 
+  FILES: any[] = [];
   FILE_VIDEO: any = null;
+  FILE_DOCUMENT: any = null;
   loadVideo: boolean = true;
   link_video_vimeo: any = null;
+
+  DOCUMENT_NAME: any = null;
+  DOCUMENT_SIZE: any = null;
 
   constructor(
     public modal: NgbActiveModal,
@@ -113,5 +118,41 @@ export class ClassAditComponent implements OnInit {
 
   processVideo($event: any) {
     this.FILE_VIDEO = $event.target.files[0];
+  }
+
+  processFile($event: any) {
+    console.log($event.target.files[0]);
+    this.FILE_DOCUMENT = $event.target.files[0];
+    this.DOCUMENT_NAME = this.FILE_DOCUMENT.name;
+    this.DOCUMENT_SIZE = this.FILE_DOCUMENT.size;
+  }
+
+  uploadFile() {
+    if (!this.FILE_DOCUMENT) {
+      this.toaster.open({
+        text: 'NO EXISTE EL DOCUMENTO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+      return;
+    }
+
+    let formData = new FormData();
+
+    formData.append('clase', this.CLASS._id);
+    formData.append('recurso', this.FILE_DOCUMENT);
+    formData.append('file_name', this.DOCUMENT_NAME);
+    formData.append('size', this.DOCUMENT_SIZE);
+    this.loadVideo = false;
+    this.courseClassService.uploadFile(formData).subscribe((resp: any) => {
+      console.log(resp);
+      this.loadVideo = true;
+      this.FILES.unshift(resp.file);
+      this.toaster.open({
+        text: 'DOCUMENTO SUBIDO EXITOSAMENTE!',
+        caption: 'VALIDACIONES',
+        type: 'primary',
+      });
+    });
   }
 }

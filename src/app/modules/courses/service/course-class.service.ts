@@ -72,4 +72,26 @@ export class CourseClassService {
       .delete(URL, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
+
+  uploadFile(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/course-class/register-file';
+
+    return this.http
+      .post(URL, data, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  removeClassFile(file_id: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/course-class/delete-file/' + file_id;
+
+    return this.http
+      .delete(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
 }
