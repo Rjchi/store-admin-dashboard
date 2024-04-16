@@ -159,4 +159,23 @@ export class ClassAditComponent implements OnInit {
       });
     });
   }
+
+  deleteFile(FILE: any) {
+    this.loadVideo = false;
+    this.courseClassService.removeClassFile(FILE._id).subscribe((resp: any) => {
+      console.log(resp);
+      this.loadVideo = true;
+      let INDEX = this.FILES.findIndex((item: any) => item._id == FILE._id);
+
+      if (INDEX != -1) {
+        this.FILES.splice(INDEX, 1);
+      }
+
+      this.toaster.open({
+        text: 'DOCUMENTO SUBIDO EXITOSAMENTE!',
+        caption: 'VALIDACIONES',
+        type: 'primary',
+      });
+    });
+  }
 }
