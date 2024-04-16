@@ -34,7 +34,7 @@ export class ClassAddComponent implements OnInit {
       this.sectionId = resp.id;
     });
 
-    this.courseClassService.listClasses().subscribe((resp: any) => {
+    this.courseClassService.listClasses(this.sectionId).subscribe((resp: any) => {
       this.CLASSES = resp.course_class;
     });
   }

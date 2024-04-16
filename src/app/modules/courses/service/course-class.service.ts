@@ -17,12 +17,12 @@ export class CourseClassService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  listClasses() {
+  listClasses(sectionId: any = null) {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
 
-    let URL = URL_SERVICIOS + '/course-class/list';
+    let URL = URL_SERVICIOS + '/course-class/list' + (sectionId ? "?section_id=" + sectionId : "");
 
     return this.http
       .get(URL, { headers })
