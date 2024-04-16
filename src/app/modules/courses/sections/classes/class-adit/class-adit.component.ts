@@ -39,6 +39,7 @@ export class ClassAditComponent implements OnInit {
     this.state = this.CLASS.state;
     this.description = this.CLASS.description;
     this.link_video_vimeo = this.CLASS.vimeo_id;
+    this.FILES = this.CLASS.files;
   }
 
   onChange($event: any) {
@@ -148,6 +149,9 @@ export class ClassAditComponent implements OnInit {
       console.log(resp);
       this.loadVideo = true;
       this.FILES.unshift(resp.file);
+      this.FILE_DOCUMENT = null;
+      this.DOCUMENT_NAME = null;
+      this.DOCUMENT_SIZE = null;
       this.toaster.open({
         text: 'DOCUMENTO SUBIDO EXITOSAMENTE!',
         caption: 'VALIDACIONES',
