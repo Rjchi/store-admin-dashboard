@@ -51,10 +51,10 @@
             [(ngModel)]="categorie"
             (change)="listCourses()"
           >
-          <option value="">Todos</option>
-          <ng-container *ngFor="let CATEGORIE of CATEGORIES">
-            <option [value]="CATEGORIE._id">{{ CATEGORIE.title }}</option>
-          </ng-container>
+            <option value="">Todos</option>
+            <ng-container *ngFor="let CATEGORIE of CATEGORIES">
+              <option [value]="CATEGORIE._id">{{ CATEGORIE.title }}</option>
+            </ng-container>
           </select>
         </div>
         <!--end::Search-->
@@ -331,6 +331,8 @@
                   </a>
                   <a
                     href="#"
+                    onclick="return false;"
+                    (click)="deleteCourse(COURSE)"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
                   >
                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
