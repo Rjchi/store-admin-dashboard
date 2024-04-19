@@ -2,10 +2,13 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { CuponesRoutingModule } from './cupones-routing.module';
+import { CuponesComponent } from './cupones.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    CuponesComponent
+  ],
   imports: [
     CommonModule,
     CuponesRoutingModule
