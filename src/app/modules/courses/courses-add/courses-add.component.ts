@@ -11,7 +11,7 @@ import { CoursesService } from '../service/courses.service';
 export class CoursesAddComponent implements OnInit {
   USERS: any = [];
   CATEGORIES: any = [];
-  isLoading$: any; // Siempre es neccesario para que se renderice correctamente la vista
+  isLoading$: any; // Siempre es necesario para que se renderice correctamente la vista
 
   FILE_IMAGEN: any;
   IMAGEN_PREVIZUALIZAR: any = '';

@@ -39,7 +39,7 @@ export class CoursesService {
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  listCourses(search: any = null, state: any = null) {
+  listCourses(search: any = null, state: any = null, categorie: any = null) {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
@@ -53,8 +53,12 @@ export class CoursesService {
       LINK += '&state=' + state;
     }
 
-    let URL = URL_SERVICIOS + '/courses/list' + LINK;
+    if (categorie) {
+      LINK += '&categorie=' + categorie;
+    }
 
+    let URL = URL_SERVICIOS + '/courses/list' + LINK;
+    console.log(URL);
     return this.http
       .get(URL, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));

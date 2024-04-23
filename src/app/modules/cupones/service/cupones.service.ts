@@ -1,13 +1,14 @@
-import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, BehaviorSubject, finalize } from 'rxjs';
-import { URL_SERVICIOS } from 'src/app/config/config';
+
 import { AuthService } from '../../auth';
+import { URL_SERVICIOS } from 'src/app/config/config';
 
 @Injectable({
   providedIn: 'root',
 })
-export class CourseSectionService {
+export class CuponesService {
   isLoading$: Observable<boolean>;
   isLoadingSubject: BehaviorSubject<boolean>;
 
@@ -16,45 +17,76 @@ export class CourseSectionService {
     this.isLoading$ = this.isLoadingSubject.asObservable();
   }
 
-  listSections(cursoId: any = null) {
+  configAll() {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
-
-    let URL = URL_SERVICIOS + '/course-section/list' + (cursoId ? "?curso_id=" + cursoId : "");
+    const URL = URL_SERVICIOS + '/cupone/config-all';
 
     return this.http
       .get(URL, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  registerSection(data: any) {
+  ShowCupone(cuponeId: string = '') {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
-    let URL = URL_SERVICIOS + '/course-section/register';
+    const URL = URL_SERVICIOS + '/cupone/show/' + cuponeId;
+
+    return this.http
+      .get(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  listCupones(search: any = null, state: any = null) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let LINK = '?T=';
+
+    if (search) {
+      LINK += '&search=' + search;
+    }
+
+    if (state) {
+      LINK += "&state=" + state;
+    }
+
+    let URL = URL_SERVICIOS + '/cupone/list' + LINK;
+    console.log(URL);
+    return this.http
+      .get(URL, { headers })
+      .pipe(finalize(() => this.isLoadingSubject.next(false)));
+  }
+
+  registerCupone(data: any) {
+    this.isLoadingSubject.next(true);
+
+    let headers = new HttpHeaders({ token: this.authservice.token });
+    let URL = URL_SERVICIOS + '/cupone/register';
 
     return this.http
       .post(URL, data, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  updateSection(data: any) {
+  updateCupone(data: any) {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
-    let URL = URL_SERVICIOS + '/course-section/update';
+    let URL = URL_SERVICIOS + '/cupone/update';
 
     return this.http
       .put(URL, data, { headers })
       .pipe(finalize(() => this.isLoadingSubject.next(false)));
   }
 
-  removeSection(section_id: any) {
+  removeCupone(categorie_id: any) {
     this.isLoadingSubject.next(true);
 
     let headers = new HttpHeaders({ token: this.authservice.token });
-    let URL = URL_SERVICIOS + '/course-section/remove/' + section_id;
+    let URL = URL_SERVICIOS + '/cupone/remove/' + categorie_id;
 
     return this.http
       .delete(URL, { headers })
