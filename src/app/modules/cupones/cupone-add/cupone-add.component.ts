@@ -35,6 +35,9 @@ export class CuponeAddComponent implements OnInit {
         this.CATEGORIES = response.categories;
       }
     });
+
+    this.course_id = '';
+    this.categorie_id = '';
   }
 
   save() {}
@@ -49,6 +52,9 @@ export class CuponeAddComponent implements OnInit {
 
   selectedTypeCupon(val: number) {
     this.type_cupon = val;
+
+    this.COURSES_SELECTED = [];
+    this.CATEGORIES_SELECTED = [];
   }
 
   addCourse() {
@@ -70,6 +76,7 @@ export class CuponeAddComponent implements OnInit {
           return;
         } else {
           this.COURSES_SELECTED.push(this.COURSES[COURSE_INDEX]);
+          this.course_id = '';
         }
       }
     } else {
@@ -100,6 +107,7 @@ export class CuponeAddComponent implements OnInit {
           return;
         } else {
           this.CATEGORIES_SELECTED.push(this.CATEGORIES[CATEGORIE_INDEX]);
+          this.categorie_id = '';
         }
       }
     } else {
