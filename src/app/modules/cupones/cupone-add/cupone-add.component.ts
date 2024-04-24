@@ -110,4 +110,24 @@ export class CuponeAddComponent implements OnInit {
       });
     }
   }
+
+  removeCategorie(CATEGORIE_SELEC: any) {
+    let CATEGORIE_INDEX = this.CATEGORIES_SELECTED.findIndex(
+      (item: any) => item._id === CATEGORIE_SELEC._id
+    );
+
+    if (CATEGORIE_INDEX != -1) {
+      this.CATEGORIES_SELECTED.splice(CATEGORIE_INDEX, 1);
+    }
+  }
+
+  removeCourse(COURSE_SELEC: any) {
+    let COURSE_INDEX = this.COURSES_SELECTED.findIndex(
+      (item: any) => item._id === COURSE_SELEC._id
+    );
+
+    if (COURSE_INDEX != -1) {
+      this.COURSES_SELECTED.splice(COURSE_INDEX, 1);
+    }
+  }
 }
