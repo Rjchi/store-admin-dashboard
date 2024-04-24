@@ -40,7 +40,96 @@ export class CuponeAddComponent implements OnInit {
     this.categorie_id = '';
   }
 
-  save() {}
+  save() {
+    if (!this.code || !this.discount) {
+      this.toaster.open({
+        text: 'NECESITAS LLENAR TODOS LOS CAMPOS NECESARIOS',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+
+      return;
+    }
+
+    if (this.type_count === 2 && this.num_use === 0) {
+      this.toaster.open({
+        text: 'NECESITAS LLENAR UN NUMERO DE USOS LIMITE',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+
+      return;
+    }
+
+    if (this.type_cupon === 1 && this.COURSES_SELECTED.length === 0) {
+      this.toaster.open({
+        text: 'NECESITAS SELECCIONAR UN CURSO',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+
+      return;
+    }
+
+    if (this.type_cupon === 2 && this.CATEGORIES_SELECTED.length === 0) {
+      this.toaster.open({
+        text: 'NECESITAS SELECCIONAR UNA CATEGORIA',
+        caption: 'VALIDACIONES',
+        type: 'danger',
+      });
+
+      return;
+    }
+
+    let courses_selected: any = [];
+    let categories_selected: any = [];
+
+    this.COURSES_SELECTED.forEach((course: any) => {
+      courses_selected.push(course._id);
+    });
+
+    this.CATEGORIES_SELECTED.forEach((categorie: any) => {
+      categories_selected.push(categorie._id);
+    });
+
+    let data = {
+      // state: 1,
+      num_use: this.num_use,
+      discount: this.discount,
+      code: this.code,
+      type_cupon: this.type_cupon,
+      type_count: this.type_count,
+      type_discount: this.type_discount,
+      courses: courses_selected,
+      categories: categories_selected,
+    };
+
+    this.cuponeService.registerCupone(data).subscribe((resp: any) => {
+      console.log(resp);
+      if (resp.message === 403) {
+        this.toaster.open({
+          text: resp.message_text,
+          caption: 'VALIDACIONES',
+          type: 'warning',
+        });
+      } else {
+        this.toaster.open({
+          text: resp.message_text,
+          caption: 'VALIDACIONES',
+          type: 'primary',
+        });
+
+        this.code = null;
+        this.num_use = 0;
+        this.discount = 0;
+        this.type_cupon = 1;
+        this.type_count = 1;
+        this.type_discount = 1;
+        this.COURSES_SELECTED = [];
+        this.CATEGORIES_SELECTED = [];
+      }
+    });
+  }
 
   selectedTypeDiscount(val: number) {
     this.type_discount = val;
