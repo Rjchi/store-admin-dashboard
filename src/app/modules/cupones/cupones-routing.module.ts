@@ -12,7 +12,7 @@ const routes: Routes = [
     component: CuponesComponent,
     children: [
       { path: 'register', component: CuponeAddComponent },
-      { path: 'edit/:id', component: CuponeEditComponent },
+      { path: 'list/edit/:id', component: CuponeEditComponent },
       { path: 'list', component: CuponeListComponent },
     ],
   },
