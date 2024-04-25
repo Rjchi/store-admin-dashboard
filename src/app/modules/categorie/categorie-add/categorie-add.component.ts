@@ -58,7 +58,7 @@ export class CategorieAddComponent implements OnInit {
     let formData = new FormData();
 
     formData.append('title', this.title);
-    formData.append('imagen', this.FILE_IMAGEN);
+    formData.append('image', this.FILE_IMAGEN);
 
     this.categorieService.registerCategorie(formData).subscribe((res: any) => {
 
