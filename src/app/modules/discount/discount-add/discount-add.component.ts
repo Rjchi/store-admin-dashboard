@@ -1,95 +1,42 @@
-import { Toaster } from 'ngx-toast-notifications';
-import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
+import { Toaster } from 'ngx-toast-notifications';
 
-import { CuponesService } from '../service/cupones.service';
+import { DiscountService } from '../service/discount.service';
 
 @Component({
-  selector: 'app-cupone-edit',
-  templateUrl: './cupone-edit.component.html',
-  styleUrls: ['./cupone-edit.component.scss'],
+  selector: 'app-discount-add',
+  templateUrl: './discount-add.component.html',
+  styleUrls: ['./discount-add.component.scss'],
 })
-export class CuponeEditComponent implements OnInit {
-  code: any = null;
-  num_use: number = 0;
+export class DiscountAddComponent implements OnInit {
   discount: number = 0;
-  type_count: number = 1;
-  type_cupon: number = 1;
+  type_segment: number = 1;
+  type_campaing: number = 1;
   course_id: any = null;
   categorie_id: any = null;
   type_discount: number = 1;
+  start_date: any = null;
+  end_date: any = null;
 
   isLoading$: any;
 
   COURSES: any[] = [];
   CATEGORIES: any[] = [];
-  CUPON_SELECTED: any = null;
   COURSES_SELECTED: any[] = [];
   CATEGORIES_SELECTED: any[] = [];
 
-  cupone_id: any;
-
   constructor(
-    public cuponeService: CuponesService,
-    public toaster: Toaster,
-    public activatedRouter: ActivatedRoute
+    public discountService: DiscountService,
+    public toaster: Toaster
   ) {}
 
   ngOnInit(): void {
-    this.isLoading$ = this.cuponeService.isLoading$;
-
-    this.activatedRouter.params.subscribe((params: any) => {
-      this.cupone_id = params.id;
-    });
-
-    this.cuponeService.configAll().subscribe((response: any) => {
+    this.isLoading$ = this.discountService.isLoading$;
+    this.discountService.configAll().subscribe((response: any) => {
       if (response && response.categories && response.courses) {
         this.COURSES = response.courses;
         this.CATEGORIES = response.categories;
       }
-
-      this.cuponeService
-        .ShowCupone(this.cupone_id)
-        .subscribe((response: any) => {
-          console.log(response);
-          this.CUPON_SELECTED = response.cupone;
-
-          this.code = this.CUPON_SELECTED.code;
-          this.num_use = this.CUPON_SELECTED.num_use;
-          this.discount = this.CUPON_SELECTED.discount;
-          this.type_count = this.CUPON_SELECTED.type_count;
-          this.type_cupon = this.CUPON_SELECTED.type_cupon;
-          this.type_discount = this.CUPON_SELECTED.type_discount;
-
-          if (this.type_cupon === 1) {
-            this.CUPON_SELECTED.courses.forEach((course: any) => {
-              let COURSE_S = this.COURSES_SELECTED.find(
-                (item: any) => item._id === course
-              );
-
-              if (!COURSE_S) {
-                let COURSE_T = this.COURSES.find(
-                  (item: any) => item._id === course
-                );
-                this.COURSES_SELECTED.push(COURSE_T);
-              }
-            });
-          } else {
-            this.CUPON_SELECTED.categories.forEach((categorie: any) => {
-              console.log(categorie);
-              let CATEGORIE_S = this.CATEGORIES_SELECTED.find(
-                (item: any) => item._id === categorie
-              );
-
-              if (!CATEGORIE_S) {
-                let CATEGORIE_T = this.CATEGORIES.find(
-                  (item: any) => item._id === categorie
-                );
-                this.CATEGORIES_SELECTED.push(CATEGORIE_T);
-              }
-            });
-          }
-        });
     });
 
     this.course_id = '';
@@ -97,7 +44,7 @@ export class CuponeEditComponent implements OnInit {
   }
 
   save() {
-    if (!this.code || !this.discount) {
+    if (!this.discount || !this.start_date || !this.end_date) {
       this.toaster.open({
         text: 'NECESITAS LLENAR TODOS LOS CAMPOS NECESARIOS',
         caption: 'VALIDACIONES',
@@ -107,17 +54,7 @@ export class CuponeEditComponent implements OnInit {
       return;
     }
 
-    if (this.type_count === 2 && this.num_use === 0) {
-      this.toaster.open({
-        text: 'NECESITAS LLENAR UN NUMERO DE USOS LIMITE',
-        caption: 'VALIDACIONES',
-        type: 'danger',
-      });
-
-      return;
-    }
-
-    if (this.type_cupon === 1 && this.COURSES_SELECTED.length === 0) {
+    if (this.type_segment === 1 && this.COURSES_SELECTED.length === 0) {
       this.toaster.open({
         text: 'NECESITAS SELECCIONAR UN CURSO',
         caption: 'VALIDACIONES',
@@ -127,7 +64,7 @@ export class CuponeEditComponent implements OnInit {
       return;
     }
 
-    if (this.type_cupon === 2 && this.CATEGORIES_SELECTED.length === 0) {
+    if (this.type_segment === 2 && this.CATEGORIES_SELECTED.length === 0) {
       this.toaster.open({
         text: 'NECESITAS SELECCIONAR UNA CATEGORIA',
         caption: 'VALIDACIONES',
@@ -139,29 +76,36 @@ export class CuponeEditComponent implements OnInit {
 
     let courses_selected: any = [];
     let categories_selected: any = [];
+    let courses_s: any = [];
+    let categories_s: any = [];
 
     this.COURSES_SELECTED.forEach((course: any) => {
       courses_selected.push(course._id);
+      courses_s.push(course._id);
     });
 
     this.CATEGORIES_SELECTED.forEach((categorie: any) => {
       categories_selected.push(categorie._id);
+      categories_s.push(categorie._id);
     });
 
     let data = {
       // state: 1,
-      num_use: this.num_use,
       discount: this.discount,
-      code: this.code,
-      type_cupon: this.type_cupon,
-      type_count: this.type_count,
+      type_segment: this.type_segment,
+      type_campaing: this.type_campaing,
       type_discount: this.type_discount,
       courses: courses_selected,
       categories: categories_selected,
-      _id: this.cupone_id,
+      courses_s: courses_s,
+      categories_s: categories_s,
+      start_date: this.start_date,
+      end_date: this.end_date,
+      start_date_num: new Date(this.start_date).getTime(),
+      end_date_num: new Date(this.end_date).getTime(),
     };
 
-    this.cuponeService.updateCupone(data).subscribe((resp: any) => {
+    this.discountService.registerDiscount(data).subscribe((resp: any) => {
       console.log(resp);
       if (resp.message === 403) {
         this.toaster.open({
@@ -176,11 +120,12 @@ export class CuponeEditComponent implements OnInit {
           type: 'primary',
         });
 
-        this.code = null;
-        this.num_use = 0;
         this.discount = 0;
-        this.type_cupon = 1;
-        this.type_count = 1;
+        this.end_date = null;
+        this.type_segment = 1;
+        this.type_segment = 1;
+        this.start_date = null;
+        this.type_campaing = 1;
         this.type_discount = 1;
         this.COURSES_SELECTED = [];
         this.CATEGORIES_SELECTED = [];
@@ -192,12 +137,12 @@ export class CuponeEditComponent implements OnInit {
     this.type_discount = val;
   }
 
-  selectedTypeCount(val: number) {
-    this.type_count = val;
+  selectedTypeCampaing(val: number) {
+    this.type_campaing = val;
   }
 
   selectedTypeCupon(val: number) {
-    this.type_cupon = val;
+    this.type_segment = val;
 
     this.COURSES_SELECTED = [];
     this.CATEGORIES_SELECTED = [];

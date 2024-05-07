@@ -17,6 +17,7 @@ import { FakeAPIService } from './_fake/fake-api.service';
 import { CKEditorModule } from 'ckeditor4-angular';
 
 import { ToastNotificationsModule } from 'ngx-toast-notifications';
+import { DatePipe } from '@angular/common';
 
 function appInitializer(authService: AuthService) {
   return () => {
@@ -52,6 +53,7 @@ function appInitializer(authService: AuthService) {
     ToastNotificationsModule.forRoot({duration: 6000, type: 'primary',position: 'top-right'}),
   ],
   providers: [
+    DatePipe,
     {
       provide: APP_INITIALIZER,
       useFactory: appInitializer,

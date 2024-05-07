@@ -13,7 +13,7 @@
         <!--begin::Search-->
         <div class="d-flex align-items-center position-relative my-1">
           <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg-->
-          <span class="svg-icon svg-icon-1 position-absolute ms-6">
+          <!-- <span class="svg-icon svg-icon-1 position-absolute ms-6">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               width="24"
@@ -36,16 +36,7 @@
                 fill="currentColor"
               />
             </svg>
-          </span>
-          <!--end::Svg Icon-->
-          <input
-            type="text"
-            (keyup.enter)="listCategorie()"
-            [(ngModel)]="search"
-            data-kt-user-table-filter="search"
-            class="form-control form-control-solid w-250px ps-14"
-            placeholder="Search categorie"
-          />
+          </span> -->
         </div>
         <!--end::Search-->
       </div>
@@ -57,31 +48,6 @@
           class="d-flex justify-content-end"
           data-kt-user-table-toolbar="base"
         >
-          <!--begin::Filter-->
-          <button
-            type="button"
-            class="btn btn-light-primary me-3"
-            data-kt-menu-trigger="click"
-            data-kt-menu-placement="bottom-end"
-          >
-            <!--begin::Svg Icon | path: icons/duotune/general/gen031.svg-->
-            <span class="svg-icon svg-icon-2">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-              >
-                <path
-                  d="M19.0759 3H4.72777C3.95892 3 3.47768 3.83148 3.86067 4.49814L8.56967 12.6949C9.17923 13.7559 9.5 14.9582 9.5 16.1819V19.5072C9.5 20.2189 10.2223 20.7028 10.8805 20.432L13.8805 19.1977C14.2553 19.0435 14.5 18.6783 14.5 18.273V13.8372C14.5 12.8089 14.8171 11.8056 15.408 10.964L19.8943 4.57465C20.3596 3.912 19.8856 3 19.0759 3Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </span>
-            <!--end::Svg Icon-->Filter
-          </button>
-          <!--begin::Menu 1-->
           <div
             class="menu menu-sub menu-sub-dropdown w-300px w-md-325px"
             data-kt-menu="true"
@@ -107,11 +73,11 @@
                   data-kt-user-table-filter="role"
                   data-hide-search="true"
                   [(ngModel)]="state"
-                  (change)="listCategorie()"
+                  (change)="listDiscount()"
                 >
                   <option value="">Todos</option>
-                  <option value="1">Activo</option>
-                  <option value="2">Inactivo</option>
+                  <option value="1">ACTIVO</option>
+                  <option value="2">INACTIVO</option>
                 </select>
               </div>
               <!--end::Input group-->
@@ -121,11 +87,7 @@
           <!--end::Menu 1-->
           <!--end::Filter-->
           <!--begin::Add user-->
-          <button
-            type="button"
-            class="btn btn-primary"
-            (click)="registerCategorie()"
-          >
+          <a routerLink="/discounts/register" class="btn btn-primary">
             <!--begin::Svg Icon | path: icons/duotune/arrows/arr075.svg-->
             <span class="svg-icon svg-icon-2">
               <svg
@@ -155,8 +117,8 @@
                 />
               </svg>
             </span>
-            <!--end::Svg Icon-->Add Categorie
-          </button>
+            <!--end::Svg Icon-->Add Discount
+          </a>
           <!--end::Add user-->
         </div>
         <!--end::Toolbar-->
@@ -182,82 +144,89 @@
       <!--end::Card toolbar-->
     </div>
     <!--end::Card header-->
-    <!--begin::Card body-->
-    <div class="card-body py-4">
-      <!--begin::Table-->
-      <table
-        class="table align-middle table-row-dashed fs-6 gy-5"
-        id="kt_table_users"
-      >
-        <!--begin::Table head-->
-        <thead>
-          <!--begin::Table row-->
-          <tr class="text-start text-muted fw-bolder fs-7 text-uppercase gs-0">
-            <th class="">Image</th>
-            <th class="">Title</th>
-            <th class="">State</th>
-            <th class="">Actions</th>
-          </tr>
-          <!--end::Table row-->
-        </thead>
-        <!--end::Table head-->
-        <!--begin::Table body-->
-        <tbody class="text-gray-600 fw-bold">
-          <!--begin::Table row-->
-          <ng-container *ngFor="let CATEGORIE of CATEGORIES">
-            <tr>
-              <!--begin::User=-->
-              <td class="d-flex align-items-center">
-                <!--begin:: Avatar -->
-                <div
-                  class="symbol symbol-circle symbol-50px overflow-hidden me-3"
-                >
-                  <a href="#" onclick="return false;">
-                    <div class="symbol-label" *ngIf="CATEGORIE.image">
-                      <img
-                        [src]="CATEGORIE.image"
-                        [alt]="CATEGORIE.title"
-                        class="w-100"
-                      />
-                    </div>
-                    <div class="symbol-label" *ngIf="!CATEGORIE.image">
-                      <img
-                        src="assets/media/avatars/300-6.jpg"
-                        alt="Emma Smith"
-                        class="w-100"
-                      />
-                    </div>
-                  </a>
-                </div>
-                <!--end::Avatar-->
-              </td>
-              <!--end::User=-->
-              <td>
-                 <!--begin::User details-->
-                 <div class="d-flex flex-column">
+    <div class="card-body py-3">
+      <!--begin::Table container-->
+      <div class="table-responsive">
+        <!--begin::Table-->
+        <table class="table align-middle gs-0 gy-4">
+          <!--begin::Table head-->
+          <thead>
+            <tr class="fw-bolder text-muted bg-light">
+              <th class="ps-4 min-w-325px rounded-start">Tipo de Campaña</th>
+              <th class="min-w-125px">Descuento</th>
+              <th class="min-w-125px">Fecha de Inicio/Fin</th>
+              <th class="min-w-200px">Tipo de Segmento</th>
+              <th class="min-w-150px">Status</th>
+              <th class="min-w-200px text-end rounded-end"></th>
+            </tr>
+          </thead>
+          <!--end::Table head-->
+          <!--begin::Table body-->
+          <tbody>
+            <ng-container *ngFor="let DISCOUNT of DISCOUNTS">
+              <tr>
+                <td>
                   <a
                     href="#"
                     onclick="return false;"
-                    class="text-gray-800 text-hover-primary mb-1"
-                    >{{ CATEGORIE.title }}</a
+                    class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                    >{{ getTypeCampaing(DISCOUNT.type_campaing) }}</a
                   >
-                </div>
-                <!--begin::User details-->
-              </td>
-              <!--begin::Last login=-->
-              <td>
-                <div class="badge badge-light-success fw-bolder" *ngIf="CATEGORIE.state === 1">Activo</div>
-                <div class="badge badge-light-danger fw-bolder" *ngIf="CATEGORIE.state === 2">Inactivo</div>
-              </td>
-              <!--end::Last login=-->
-              <!--begin::Action=-->
-              <td class="text-start">
-                <div class="d-flex justify-content-start flex-shrink-0">
+                  <!-- <span class="text-muted fw-bold text-muted d-block fs-7"
+                    >Paid</span
+                  > -->
+                </td>
+                <td>
                   <a
+                    href="#"
+                    onclick="return false;"
+                    class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                    >{{
+                      DISCOUNT.type_discount === 1 ? "PORCENTAJE" : "MONTO FIJO"
+                    }}</a
+                  >
+                  <span class="text-muted fw-bold text-muted d-block fs-7"
+                    >{{ DISCOUNT.discount }}
+                    {{ DISCOUNT.type_discount === 1 ? "%" : "USD" }}</span
+                  >
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    onclick="return false;"
+                    class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                    >{{ getParseDate(DISCOUNT.start_date) +  " / " + getParseDate(DISCOUNT.end_date) }}</a
+                  >
+                </td>
+                <td>
+                  <a
+                    href="#"
+                    onclick="return false;"
+                    class="text-dark fw-bolder text-hover-primary d-block mb-1 fs-6"
+                    >{{ DISCOUNT.type_segment === 1 ? "CURSOS" : "CATEGORIAS" }}</a
+                  >
+                  <!-- <span class="text-muted fw-bold text-muted d-block fs-7">{{
+                    DISCOUNT.user.profession
+                  }}</span> -->
+                </td>
+                <td>
+                  <span
+                    class="badge badge-light-primary fs-7 fw-bold"
+                    *ngIf="DISCOUNT.state === 1"
+                    >ACTIVO</span
+                  >
+                  <span
+                    class="badge badge-light-warning fs-7 fw-bold"
+                    *ngIf="DISCOUNT.state === 2"
+                    >INACTIVO</span
+                  >
+                </td>
+                <td class="text-end">
+                  <a
+                    onclick="return false;"
+                    [routerLink]="['/discounts/list/edit/', DISCOUNT._id]"
                     href="#"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1"
-                    onclick="return false;"
-                    (click)="editCategorie(CATEGORIE)"
                   >
                     <!--begin::Svg Icon | path: icons/duotune/art/art005.svg-->
                     <span class="svg-icon svg-icon-3">
@@ -284,8 +253,8 @@
                   <a
                     href="#"
                     onclick="return false;"
+                    (click)="deleteDiscount(DISCOUNT)"
                     class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm"
-                    (click)="deleteCategorie(CATEGORIE)"
                   >
                     <!--begin::Svg Icon | path: icons/duotune/general/gen027.svg-->
                     <span class="svg-icon svg-icon-3">
@@ -314,18 +283,16 @@
                     </span>
                     <!--end::Svg Icon-->
                   </a>
-                </div>
-              </td>
-              <!--end::Action=-->
-            </tr>
-          </ng-container>
-          <!--end::Table row-->
-        </tbody>
-        <!--end::Table body-->
-      </table>
-      <!--end::Table-->
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+          <!--end::Table body-->
+        </table>
+        <!--end::Table-->
+      </div>
+      <!--end::Table container-->
     </div>
-    <!--end::Card body-->
   </div>
   <!--end::Card-->
 </div>

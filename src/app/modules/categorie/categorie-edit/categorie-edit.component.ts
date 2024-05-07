@@ -28,7 +28,7 @@ export class CategorieEditComponent implements OnInit {
   ngOnInit(): void {
     this.title = this.CATEGORIE.title;
     this.state = this.CATEGORIE.state;
-    this.IMAGEN_PREVIZUALIZAR = this.CATEGORIE.imagen;
+    this.IMAGEN_PREVIZUALIZAR = this.CATEGORIE.image;
   }
 
   processAvatar($event: any) {
@@ -65,7 +65,7 @@ export class CategorieEditComponent implements OnInit {
     formData.append('_id', this.CATEGORIE._id);
 
     if (this.FILE_IMAGEN) {
-      formData.append('imagen', this.FILE_IMAGEN);
+      formData.append('image', this.FILE_IMAGEN);
     }
 
     formData.append('state', this.state + '');

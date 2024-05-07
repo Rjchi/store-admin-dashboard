@@ -62,6 +62,11 @@ const Routing: Routes = [
       import('../modules/cupones/cupones.module').then((m) => m.CuponesModule),
   },
   {
+    path: 'discounts',
+    loadChildren: () =>
+      import("../modules/discount/discount.module").then((m) => m.DiscountModule),
+  },
+  {
     path: '',
     redirectTo: '/dashboard',
     pathMatch: 'full',
